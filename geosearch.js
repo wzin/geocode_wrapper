@@ -6,7 +6,8 @@ function geoSearch(search_terms, google_client_id, google_client_signature )
   * reverse query example
   * http://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=false
   *
-  * NOTE: Maps API for Business users must include valid client and signature parameters with their Geocoding requests. Please refer to Maps API for Business Web Services for more information
+  * NOTE: Maps API for Business users must include valid client and signature parameters with their Geocoding requests. 
+Please refer to Maps API for Business Web Services for more information
   *
   * `search_terms`, mandatory - should be equal to query that you put into google maps.
   * `google_client_id` - optional (depends on whether client has business account)
@@ -21,7 +22,8 @@ function geoSearch(search_terms, google_client_id, google_client_signature )
   *  1. instantiate : a = new geoSearch("920 Broadway Suite 701, New York, NY");
   *  2. search : a.search(function(data, $scope){...});
   *
-  * result format is map Object : {formatted_address: "920 Broadway #701, New York, NY 10036, USA", lat: 40.7395284, lng: -73.9895417}
+  * result format is map Object : {formatted_address: "920 Broadway #701, New York, NY 10036, USA", lat: 40.7395284, 
+lng: -73.9895417}
   **/
 
   var status;
@@ -32,7 +34,8 @@ function geoSearch(search_terms, google_client_id, google_client_signature )
 
   if (google_client_id && google_client_signature) {
     //we're doin business!
-    var url_data = {'address': search_terms, 'sensor' : 'false', 'client': google_client_id, 'signature': google_client_signature};
+    var url_data = {'address': search_terms, 'sensor' : 'false', 'client': google_client_id, 'signature': 
+google_client_signature};
   } else {
     var url_data = {'address': search_terms, 'sensor' : 'false'};
   }
@@ -49,7 +52,7 @@ function geoSearch(search_terms, google_client_id, google_client_signature )
 
   var that = this;
 
-  this.search = function(callback)
+  this.search = function(callback, language)
   {
     var xmlhttp;
     var result;
@@ -73,7 +76,7 @@ function geoSearch(search_terms, google_client_id, google_client_signature )
       }
     }
     xmlhttp.open("GET", url, true);
+    if(language) xmlhttp.setRequestHeader("Accept-Language", language);
     xmlhttp.send();
   }
 }
-
